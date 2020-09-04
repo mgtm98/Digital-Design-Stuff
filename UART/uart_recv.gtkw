@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
 [*] Fri Sep  4 19:37:06 2020
 [*]
-[dumpfile] "/home/mgtm/Digital Desgin/UART/test.vcd"
+[dumpfile] "UART/test.vcd"
 [dumpfile_mtime] "Fri Sep  4 19:32:55 2020"
 [dumpfile_size] 9040
-[savefile] "/home/mgtm/Digital Desgin/UART/uart_recv.gtkw"
+[savefile] "UART/uart_recv.gtkw"
 [timestart] 0
 [size] 1366 768
 [pos] -1 -1
