@@ -1,4 +1,3 @@
-`include "counter.v"
 module UART_RX(
     input wire clk,
     input wire data_line,

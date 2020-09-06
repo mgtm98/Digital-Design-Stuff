@@ -11,7 +11,7 @@ wire [7:0] read_data;
 UART_RX rx(clk, data_line, uart_baud_control, reset, read_data);
 
 initial begin
-    $dumpfile("test.vcd");
+    $dumpfile("rx.vcd");
     $dumpvars(0,rx);
     // RESETTING
     reset = 1;
