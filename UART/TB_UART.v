@@ -1,4 +1,3 @@
-`include "counter.v"
 `include "TX.v"
 `include "RX.v"
 

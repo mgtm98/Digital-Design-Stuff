@@ -1,3 +1,8 @@
+`ifndef _UART_TX_
+`define _UART_TX_
+
+`include "counter.v"
+
 module UART_TX(
     input wire clk,
     input wire  [7:0] write_buffer,
@@ -83,7 +88,8 @@ always @(negedge reset)begin
     // period_counter_reset = 1;
     send_bit_counter_inc = 0;
     send_bit_counter_reset = 1;
-
 end
 
 endmodule
+
+`endif

@@ -1,62 +1,96 @@
-`include "RX.v"
+`include "RX/rx.v"
+module TB();
 
-module UART_TB();
+reg clk;
+reg rst;
+reg enb;
+reg dataline;
+wire [7:0] buffer;
 
-reg clk = 1;
-reg data_line = 1;
-reg [15:0] uart_baud_control = 8;
-reg reset = 1;
-wire [7:0] read_data;
-
-UART_RX rx(clk, data_line, uart_baud_control, reset, read_data);
+UART_RX rx(
+    .data(buffer),
+    .clk(clk),
+    .dataline(dataline),
+    .baudrate(16'd8),
+    .rst(rst)
+);
 
 initial begin
-    $dumpfile("rx.vcd");
-    $dumpvars(0,rx);
-    // RESETTING
-    reset = 1;
-    data_line = 1;
+    $dumpfile("test.vcd");
+    $dumpvars(0, rx);
+    // Initial Value of the wires
+    clk = 1;
+    rst = 0;
+    enb = 0;
+    dataline = 1;
     #10
-    reset = 0;
-    #5
-    reset = 1;
-    #15
-    // ***************************** FRAME 1 **************************************************
-    // START BIT
-    data_line = 0; #80
-    // DATA
-    data_line = 1; #80
-    data_line = 0; #80
-    data_line = 1; #80
-    data_line = 0; #80
-    data_line = 1; #80
-    data_line = 0; #80
-    data_line = 1; #80
-    data_line = 0; #80
-    // END BIT
-    data_line = 1; #80
-    // ****************************************************************************************
-    // ***************************** FRAME 2 **************************************************
-    // START BIT
-    data_line = 0; #80
-    // DATA
-    data_line = 0; #80
-    data_line = 0; #80
-    data_line = 1; #80
-    data_line = 1; #80
-    data_line = 0; #80
-    data_line = 0; #80
-    data_line = 1; #80
-    data_line = 1; #80
-    // END BIT
-    data_line = 1; #80
-    // ****************************************************************************************
-    data_line = 1; #120
+    // Resetting the module
+    rst = 1;
+    #10
+    rst = 0;
+    // Sending Data frame
+    // start bit
+    dataline = 0;
+    #80
+    // 8bits data
+    dataline = 1;
+    #80
+    dataline = 0;
+    #80
+    dataline = 1;
+    #80
+    dataline = 0;
+    #80
+    dataline = 1;
+    #80
+    dataline = 0;
+    #80
+    dataline = 1;
+    #80
+    dataline = 0;
+    #80
+    // PARITY
+    dataline = 1;
+    #80
+    // end bit
+    dataline = 1;
+    #80
+    // END OF FRAME
+        // Sending Data frame
+    // start bit
+    dataline = 0;
+    #80
+    // 8bits data
+    dataline = 1;
+    #80
+    dataline = 1;
+    #80
+    dataline = 1;
+    #80
+    dataline = 1;
+    #80
+    dataline = 0;
+    #80
+    dataline = 0;
+    #80
+    dataline = 0;
+    #80
+    dataline = 0;
+    #80
+    // PARITY
+    dataline = 0;
+    #80
+    // end bit
+    dataline = 1;
+    #80
+    // END OF FRAME
+    #160
     $finish();
 end
 
 always begin
-    #5 clk = ~clk;
+    #5
+    clk = ~clk;
 end
 
 endmodule
